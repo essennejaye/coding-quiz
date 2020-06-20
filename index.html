@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets\css\style.css">
+    <link rel="shortcut icon" href="assets\images\FAV2.png" type="image/x-icon">
+    <title>Coding Quiz</title>
+</head>
+
+<body>
+    <div class="scores timers">
+        <h1 id="high-score-view">View high scores</h1>
+        <h1>Timer: <span id="timer">0</span></h1>
+    </div>
+    <section class="start-page" id="start-page">
+        <div class="header">
+            <h2>Coding Quiz Challenge</h2>
+            <h3>Test Your Coding Knowledge!</h3>
+        </div>
+        <div class="container">
+            <button id="btn" class="start-btn">Start</button>
+        </div>
+        <div class="instructions">
+            <p>Try to answer as many questions as you can before the timer reaches 0.</p>
+            <p>Each correct answer scores 5 points.<br>Each incorrect answer costs you 10 seconds.</p>
+            <p>Record your high score at the end of the quiz</p>
+        </div>
+    </section>
+    <div id="quiz-content" class="quiz-content">
+        <h2 class="quiz-question" id="quiz-question"></h2>
+        <ul id="quiz-answers" class="quiz-answers"></ul>
+
+    </div>
+    <div id="results">
+
+    </div>
+    <div id="submit">Submit High score
+
+    </div>
+    <script src="assets\js\script.js"></script>
+
+
+</body>
+
+</html>
