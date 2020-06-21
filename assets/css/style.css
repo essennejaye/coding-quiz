@@ -11,6 +11,12 @@
 .header {
   text-align: center;
 }
+.header h2 {
+  font-size: 40px;
+}
+.header h3 {
+  font-size: 32px;
+}
 .container {
   text-align: center;
 }
@@ -21,8 +27,35 @@ button {
   font-size: 24px;
   background-color: #247BA0;
   color: white;
+  border-radius: 10px;
 }
+.button-choice:hover {
+  background-color:  white;
+  color:#247BA0;
+}
+
 .instructions {
   text-align: center;
+  font-size: 22px;
+}
+.quiz-content {
+  justify-content: center;
+  margin: 75px;
+  text-align: center;
+}
+.quiz-question {
+  font-size: 38px;
+  width: 50%;
+  margin: auto;
+}
+.quiz-answers {
+  width: 50%;
+  margin: auto;
+}
+.list-choice {
+  list-style: none;
+}
+.hidden {
+  display: none;
 }
 
