@@ -11,7 +11,9 @@ var quizContentEl = document.getElementById("quiz-content");
 var quizQuestionEl = document.getElementById("quiz-question");
 var quizAnswersEl = document.getElementById("quiz-answers")
 var quizEndEl = document.getElementById("quiz-end");
+var initialsEl = document.getElementById("initials");
 var submitButton = document.getElementById("submit-button");
+var highResultEl = document.getElementById("show-result");
 var questions = [
     {
         question: "What does HTML stand for?",
@@ -101,6 +103,7 @@ function getNextQuestion() {
     if (currentQuestionIndex >= questions.length) {
         clearAnswers();
         endQuiz();
+        // clearInterval(timer);
     }
     else {
         clearAnswers();
@@ -118,16 +121,14 @@ function endQuiz() {
     quizEndEl.classList.remove("hidden");
     var finalScoreEl = document.getElementById("final-score");
     finalScoreEl.textContent = score;
-    // var submitButton = document.querySelector("#submit-button");
     submitButton.addEventListener("click", getInitials);
 }
 function getInitials() {
-    var initialsEl = document.getElementById("initials");
     if (!initialsEl || initialsEl.value === "") {
         alert("You must enter your initials");
     } else {
         var lastHighScore = localStorage.getItem(scoreName);
-        lastHighScoreArray = JSON.parse(lastHighScore);
+        var lastHighScoreArray = JSON.parse(lastHighScore);
         if (!lastHighScoreArray || score > lastHighScoreArray[0].newScore) {
             var scoreData = {
                 name: initialsEl.value,
@@ -135,26 +136,32 @@ function getInitials() {
             };
             if (!lastHighScoreArray) lastHighScoreArray = [];
             lastHighScoreArray.push(scoreData);
-            lastHighScoreArray.sort(function (a, b) { return -(a.newScore - b.newScore)});
+            lastHighScoreArray.sort(function (a, b) { return -(a.newScore - b.newScore) });
             localStorage.setItem(scoreName, JSON.stringify(lastHighScoreArray));
         }
     } showResults();
 }
 function showResults() {
     quizEndEl.classList.add("hidden");
-    highResultEl = document.getElementById("show-result");
     highResultEl.classList.remove("hidden");
-    var showHighResultEl = document.getElementById("show-high-result");
+    var showHighResultEl = document.querySelector("#show-high-result");
     var lastHighScore = localStorage.getItem(scoreName);
     lastHighScoreArray = JSON.parse(lastHighScore);
     if (lastHighScoreArray) {
-        showHighResultEl.textContent = lastHighScoreArray[0].name;
+        showHighResultEl.value = "1. " + lastHighScoreArray[0].name + ":" + lastHighScoreArray[0].newScore; 
     }
 };
-
 function clearLocalStorage() {
+    document.querySelector("#show-high-result").value = "";
     localStorage.clear(lastHighScoreArray);
 }
+function startGameOver (){
+    highResultEl.classList.add("hidden");
+    startPageEl.classList.remove("hidden")
+    initialsEl.value = "";
+    currentQuestionIndex = 0;
+    score = 0;
+}
 startBtn.addEventListener("click", countDown);
-goBackBtn.addEventListener("click", countDown);
+goBackBtn.addEventListener("click", startGameOver);
 clearResultBtn.addEventListener("click", clearLocalStorage);
