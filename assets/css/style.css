@@ -61,4 +61,28 @@ button {
 .start {
   visibility: visible;
 }
-
+.quiz-end h2 {
+  display: block;
+  text-align: center;
+  font-size: 44px;
+}
+.quiz-end p {
+  display: block;
+  text-align: center;
+  font-size: 34px;
+}
+.initial-input {
+  font-size: 28px;
+  justify-content: center;
+  display: block;
+  text-align: center;
+}
+input[type="text" i] {
+  padding: 10px 25px;
+  margin: 12px 10px;
+}
+.quiz-end button {
+  display: block;
+  margin: 15px auto;
+  padding: 15px;
+}
