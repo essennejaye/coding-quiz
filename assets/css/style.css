@@ -1,7 +1,7 @@
 .scores, .timers {
   display: flex;
   justify-content: space-between;
-  font-size: 8px;
+  font-size: 13px;
   margin: 0 5px;
   padding: 0 5px;
 }
@@ -11,8 +11,9 @@
 .header {
   text-align: center;
 }
-.header h2 {
-  font-size: 40px;
+h2 {
+  font-size: 44px;
+  text-align: center;
 }
 .header h3 {
   font-size: 32px;
@@ -33,7 +34,12 @@ button {
   background-color:  white;
   color:#247BA0;
 }
-
+.hidden {
+  display: none;
+}
+.start {
+  visibility: visible;
+}
 .instructions {
   text-align: center;
   font-size: 22px;
@@ -55,16 +61,13 @@ button {
 .list-choice {
   list-style: none;
 }
-.hidden {
-  display: none;
-}
-.start {
-  visibility: visible;
-}
-.quiz-end h2 {
-  display: block;
-  text-align: center;
-  font-size: 44px;
+.feedback {
+  font-size: 28px;
+  font-style: italic;
+  color: red;
+  border-bottom: solid 2px red;
+  width: 50%;
+  margin: auto;
 }
 .quiz-end p {
   display: block;
@@ -73,16 +76,23 @@ button {
 }
 .initial-input {
   font-size: 28px;
-  justify-content: center;
-  display: block;
   text-align: center;
 }
 input[type="text" i] {
   padding: 10px 25px;
   margin: 12px 10px;
+  background-color: #247BA0;
+  color: white;
+  border-radius: 5px;
+  font-size: 20px;
+  width: 10%;
 }
 .quiz-end button {
   display: block;
   margin: 15px auto;
-  padding: 15px;
+  padding: 10px 40px;
 }
+.high-result {
+  text-align: center;
+}
+

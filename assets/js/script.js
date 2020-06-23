@@ -2,11 +2,13 @@ var score = 0;
 var savedScores = [];
 var currentQuestionIndex = 0;
 const scoreName = "endscore";
+var viewHighScoreEl = document.querySelector("#view-high-score");
 var startBtn = document.querySelector("#start-button");
 var goBackBtn = document.querySelector("#go-back");
 var clearResultBtn = document.querySelector("#clear-result");
 var startPageEl = document.getElementById("start-page");
 var countDownEl = document.querySelector("#timer");
+var countDownTimer;
 var quizContentEl = document.getElementById("quiz-content");
 var quizQuestionEl = document.getElementById("quiz-question");
 var quizAnswersEl = document.getElementById("quiz-answers")
@@ -14,6 +16,7 @@ var quizEndEl = document.getElementById("quiz-end");
 var initialsEl = document.getElementById("initials");
 var submitButton = document.getElementById("submit-button");
 var highResultEl = document.getElementById("show-result");
+var feedbackEl = document.getElementById("question-feedback");
 var questions = [
     {
         question: "What does HTML stand for?",
@@ -47,12 +50,17 @@ var questions = [
     },
 ];
 function countDown() {
-    timer = questions.length * 15;
-    var countDownTimer = setInterval(function () {
+    var lastHighScore = localStorage.getItem(scoreName);
+    var lastHighScoreArray = JSON.parse(lastHighScore);
+    if (lastHighScoreArray) {
+        viewHighScoreEl.textContent = lastHighScoreArray[0].newScore;
+    }
+    timer = questions.length * 5;
+    countDownTimer = setInterval(function () {
         countDownEl.textContent = timer;
         timer--;
         if (timer === 0) {
-            clearInterval(countDownTimer);
+            roundOver()
         }
     }, 1000);
     startPageEl.classList.add("hidden");
@@ -75,37 +83,53 @@ function buildQuiz() {
         quizAnswersEl.appendChild(listItemEl);
     }
 }
+function feedBackTimeout() {
+    feedbackEl.setAttribute("class", "hidden");
+}
 function choiceClicked(event) {
     var buttonEl = event.target;
     if (buttonEl) {
         var buttonChosen = parseInt(buttonEl.getAttribute("selectedIndex"));
         var answerChoice = questions[currentQuestionIndex].answer;
         if (buttonChosen === answerChoice) {
+            feedbackEl.textContent = "CORRECT!";
             score += 5;
         }
         else if (buttonChosen != answerChoice) {
+            feedbackEl.textContent = "WRONG!";
             timer -= 10;
+            if (timer <= 0) {
+                roundOver();
+            }
             countDownEl.textContent = timer;
         }
+        feedbackEl.removeAttribute("class", "hidden");
+        feedbackEl.setAttribute("class", "feedback")
+        setTimeout(feedBackTimeout, 500);
     }
     getNextQuestion();
 }
 function getNextQuestion() {
     if (timer <= 0) {
-        timer = 0;
-        endQuiz();
+        roundOver();
+        return;
     } else {
         ++currentQuestionIndex;
     }
     if (currentQuestionIndex >= questions.length) {
-        clearAnswers();
-        endQuiz();
-        // clearInterval(timer);
+        roundOver();
     }
     else {
         clearAnswers();
         buildQuiz();
     }
+}
+function roundOver() {
+    timer = 0;
+    countDownEl.textContent = "Round Over!";
+    clearInterval(countDownTimer);
+    clearAnswers();
+    endQuiz();
 }
 function clearAnswers() {
     var count = quizAnswersEl.childElementCount;
@@ -123,6 +147,7 @@ function endQuiz() {
 function getInitials() {
     if (!initialsEl || initialsEl.value === "") {
         alert("You must enter your initials");
+        return;
     } else {
         var lastHighScore = localStorage.getItem(scoreName);
         var lastHighScoreArray = JSON.parse(lastHighScore);
@@ -145,14 +170,14 @@ function showResults() {
     var lastHighScore = localStorage.getItem(scoreName);
     lastHighScoreArray = JSON.parse(lastHighScore);
     if (lastHighScoreArray) {
-        showHighResultEl.value = "1. " + lastHighScoreArray[0].name + ":" + lastHighScoreArray[0].newScore; 
+        showHighResultEl.value = "1. " + lastHighScoreArray[0].name + ":" + lastHighScoreArray[0].newScore;
     }
 };
 function clearLocalStorage() {
     document.querySelector("#show-high-result").value = "";
     localStorage.clear(lastHighScoreArray);
 }
-function startGameOver (){
+function startGameOver() {
     highResultEl.classList.add("hidden");
     startPageEl.classList.remove("hidden")
     initialsEl.value = "";
