@@ -1,22 +1,6 @@
 var score = 0;
 var savedScores = [];
 var currentQuestionIndex = 0;
-const scoreName = "endscore";
-var viewHighScoreEl = document.querySelector("#view-high-score");
-var startBtn = document.querySelector("#start-button");
-var goBackBtn = document.querySelector("#go-back");
-var clearResultBtn = document.querySelector("#clear-result");
-var startPageEl = document.getElementById("start-page");
-var countDownEl = document.querySelector("#timer");
-var countDownTimer;
-var quizContentEl = document.getElementById("quiz-content");
-var quizQuestionEl = document.getElementById("quiz-question");
-var quizAnswersEl = document.getElementById("quiz-answers")
-var quizEndEl = document.getElementById("quiz-end");
-var initialsEl = document.getElementById("initials");
-var submitButton = document.getElementById("submit-button");
-var highResultEl = document.getElementById("show-result");
-var feedbackEl = document.getElementById("question-feedback");
 var questions = [
     {
         question: "What does HTML stand for?",
@@ -46,26 +30,39 @@ var questions = [
             "4. Contemporary Styling Specifications"
         ],
         answer: 2
-
     },
 ];
-function countDown() {
+// retreive and display high score if saved otherwise display 0
+function retreiveHighScore() {
     var lastHighScore = localStorage.getItem(scoreName);
     var lastHighScoreArray = JSON.parse(lastHighScore);
     if (lastHighScoreArray) {
-        viewHighScoreEl.textContent = lastHighScoreArray[0].newScore;
+        return retreivedHighScore = lastHighScoreArray[0].newScore;
     }
+    else return 0;
+}
+// load start page, set timer  and start quiz 
+var startPageEl = document.getElementById("start-page");
+var countDownEl = document.querySelector("#timer");
+var countDownTimer;
+function countDown() {
+    var viewHighScoreEl = document.querySelector("#view-high-score");
+    viewHighScoreEl.textContent = retreiveHighScore();
     timer = questions.length * 5;
     countDownTimer = setInterval(function () {
         countDownEl.textContent = timer;
         timer--;
+        // if time expires before any question is answered, start quiz over
         if (timer === 0) {
             roundOver()
         }
     }, 1000);
+    // hide start page and call function to build quiz questions
     startPageEl.classList.add("hidden");
     buildQuiz();
 }
+var quizQuestionEl = document.getElementById("quiz-question");
+var quizAnswersEl = document.getElementById("quiz-answers")
 function buildQuiz() {
     var quizQuestion = questions[currentQuestionIndex].question;
     quizQuestionEl.textContent = quizQuestion;
@@ -83,6 +80,7 @@ function buildQuiz() {
         quizAnswersEl.appendChild(listItemEl);
     }
 }
+var feedbackEl = document.getElementById("question-feedback");
 function feedBackTimeout() {
     feedbackEl.setAttribute("class", "hidden");
 }
@@ -137,6 +135,8 @@ function clearAnswers() {
         quizAnswersEl.removeChild(quizAnswersEl.childNodes[0]);
     }
 }
+var quizEndEl = document.getElementById("quiz-end");
+var submitButton = document.getElementById("submit-button");
 function endQuiz() {
     quizQuestionEl.classList.add("hidden");
     quizEndEl.classList.remove("hidden");
@@ -144,6 +144,8 @@ function endQuiz() {
     finalScoreEl.textContent = score;
     submitButton.addEventListener("click", getInitials);
 }
+const scoreName = "endscore";
+var initialsEl = document.getElementById("initials");
 function getInitials() {
     if (!initialsEl || initialsEl.value === "") {
         alert("You must enter your initials");
@@ -163,6 +165,7 @@ function getInitials() {
         }
     } showResults();
 }
+var highResultEl = document.getElementById("show-result");
 function showResults() {
     quizEndEl.classList.add("hidden");
     highResultEl.classList.remove("hidden");
@@ -184,6 +187,9 @@ function startGameOver() {
     currentQuestionIndex = 0;
     score = 0;
 }
+var startBtn = document.querySelector("#start-button");
+var goBackBtn = document.querySelector("#go-back");
+var clearResultBtn = document.querySelector("#clear-result");
 startBtn.addEventListener("click", countDown);
 goBackBtn.addEventListener("click", startGameOver);
 clearResultBtn.addEventListener("click", clearLocalStorage);
