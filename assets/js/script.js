@@ -46,7 +46,6 @@ var questions = [
 
     },
 ];
-
 function countDown() {
     timer = questions.length * 15;
     var countDownTimer = setInterval(function () {
@@ -59,7 +58,6 @@ function countDown() {
     startPageEl.classList.add("hidden");
     buildQuiz();
 }
-
 function buildQuiz() {
     var quizQuestion = questions[currentQuestionIndex].question;
     quizQuestionEl.textContent = quizQuestion;
@@ -76,7 +74,6 @@ function buildQuiz() {
         listItemEl.appendChild(selectButton);
         quizAnswersEl.appendChild(listItemEl);
     }
-
 }
 function choiceClicked(event) {
     var buttonEl = event.target;
