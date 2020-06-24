@@ -86,6 +86,7 @@ var quizAnswersEl = document.getElementById("quiz-answers")
 var currentQuestionIndex = 0;
 
 function buildQuiz() {
+    quizQuestionEl.classList.remove("hidden");
     var quizQuestion = questions[currentQuestionIndex].question;
     quizQuestionEl.textContent = quizQuestion;
     // use for loop to create a list of answers with clickable buttons for selected question
