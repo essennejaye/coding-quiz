@@ -40,6 +40,6 @@ function buildQuiz() {
 ```
 
 ## Screenshots
-![](assets\images\codeQuiz_sreenshot1.png)
-![](assets\images\codeQuiz_screenshot2.png)
-![](assets\images\codeQuiz_screenshot3.png)
+![](assets/images/codeQuiz_sreenshot1.png)
+![](assets/images/codeQuiz_screenshot2.png)
+![](assets/images/codeQuiz_screenshot3.png)
