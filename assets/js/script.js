@@ -2,34 +2,54 @@ var score = 0;
 var savedScores = [];
 // object array for quiz questions, multiple choices for answers, and actual answer
 var questions = [{
-        question: "What does HTML stand for?",
-        choices: [
-            "1. Hyper Text Markup Language",
-            "2. Home Tool Markup Language",
-            "3. Hyperlinks and Text Markup Language"
-        ],
-        answer: 0
-    },
-    {
-        question: "How can you open a link in a new tab/browser window?",
-        choices: [
-            "1. <a href'url' target='new'>",
-            "2. <a href='url' target='_blank'>",
-            "3. <a href='url' new>",
-            "4. <a href='url' target='new window'>"
-        ],
-        answer: 1
-    },
-    {
-        question: "What does CSS stand for?",
-        choices: [
-            "1. Creative Sheet Styling",
-            "2. Complicated Style Stuff",
-            "3. Cascading Style Sheets",
-            "4. Contemporary Styling Specifications"
-        ],
-        answer: 2
-    },
+    question: "What does HTML stand for?",
+    choices: [
+        "1. Hyper Text Markup Language",
+        "2. Home Tool Markup Language",
+        "3. Hyperlinks and Text Markup Language"
+    ],
+    answer: 0
+},
+{
+    question: "How can you open a link in a new tab/browser window?",
+    choices: [
+        "1. <a href'url' target='new'>",
+        "2. <a href='url' target='_blank'>",
+        "3. <a href='url' new>",
+        "4. <a href='url' target='new window'>"
+    ],
+    answer: 1
+},
+{
+    question: "What does CSS stand for?",
+    choices: [
+        "1. Creative Sheet Styling",
+        "2. Complicated Style Stuff",
+        "3. Cascading Style Sheets",
+        "4. Contemporary Styling Specifications"
+    ],
+    answer: 2
+},
+{
+    question: "Which of the following is the correct syntax to display “UofA Bootcamp” in an alert box using JavaScript?",
+    choices: [
+        "1. alertbox(\“UofA Bootcamp\”)",
+        "2. msg(\“UofA Bootcamp\”)",
+        "3. msgbox(\“UofA Bootcamp\”)",
+        "4. alert(\“UofA Bootcamp\”)"
+    ],
+    answer: 3
+},
+{
+    question: "How do you create a function in Javascript?",
+    choices: [
+        "1. function myFunction()",
+        "2. function = myFunction()",
+        "3. myFunction = function()",
+        "4. function myFunction{}"
+    ],
+    answer: 0
+},
 ];
 // load start page, set timer  and start quiz 
 var startPageEl = document.getElementById("start-page");
