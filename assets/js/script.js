@@ -1,8 +1,7 @@
 var score = 0;
 var savedScores = [];
-var currentQuestionIndex = 0;
-var questions = [
-    {
+// object array for quiz questions, multiple choices for answers, and actual answer
+var questions = [{
         question: "What does HTML stand for?",
         choices: [
             "1. Hyper Text Markup Language",
@@ -32,19 +31,11 @@ var questions = [
         answer: 2
     },
 ];
-// retreive and display high score if saved otherwise display 0
-function retreiveHighScore() {
-    var lastHighScore = localStorage.getItem(scoreName);
-    var lastHighScoreArray = JSON.parse(lastHighScore);
-    if (lastHighScoreArray) {
-        return retreivedHighScore = lastHighScoreArray[0].newScore;
-    }
-    else return 0;
-}
 // load start page, set timer  and start quiz 
 var startPageEl = document.getElementById("start-page");
 var countDownEl = document.querySelector("#timer");
 var countDownTimer;
+
 function countDown() {
     var viewHighScoreEl = document.querySelector("#view-high-score");
     viewHighScoreEl.textContent = retreiveHighScore();
@@ -52,7 +43,7 @@ function countDown() {
     countDownTimer = setInterval(function () {
         countDownEl.textContent = timer;
         timer--;
-        // if time expires before any question is answered, start quiz over
+        // if time expires before any question is answered, quiz over
         if (timer === 0) {
             roundOver()
         }
@@ -61,11 +52,23 @@ function countDown() {
     startPageEl.classList.add("hidden");
     buildQuiz();
 }
+// retreive and display high score if saved otherwise display 0
+function retreiveHighScore() {
+    var lastHighScore = localStorage.getItem(scoreName);
+    var lastHighScoreArray = JSON.parse(lastHighScore);
+    if (lastHighScoreArray) {
+        return retreivedHighScore = lastHighScoreArray[0].newScore;
+    } else return 0;
+}
+// get question at currentQuestionIndex and display
 var quizQuestionEl = document.getElementById("quiz-question");
 var quizAnswersEl = document.getElementById("quiz-answers")
+var currentQuestionIndex = 0;
+
 function buildQuiz() {
     var quizQuestion = questions[currentQuestionIndex].question;
     quizQuestionEl.textContent = quizQuestion;
+    // use for loop to create a list of answers with clickable buttons for selected question
     var quizChoices = questions[currentQuestionIndex].choices;
     for (var i = 0; i < quizChoices.length; i++) {
         var quizChoice = quizChoices[i];
@@ -74,39 +77,50 @@ function buildQuiz() {
         var selectButton = document.createElement("button");
         selectButton.className = "button-choice";
         selectButton.textContent = quizChoice;
+        // give each answer a unique index so answer can be compared to correct answer
         selectButton.setAttribute("selectedIndex", i);
+        // selected button will generate a click event
         selectButton.addEventListener("click", choiceClicked);
         listItemEl.appendChild(selectButton);
+        // display all the answer buttons on the page
         quizAnswersEl.appendChild(listItemEl);
     }
 }
-var feedbackEl = document.getElementById("question-feedback");
-function feedBackTimeout() {
-    feedbackEl.setAttribute("class", "hidden");
-}
+// check if user entered right or wrong answer, display brief feedback message
 function choiceClicked(event) {
     var buttonEl = event.target;
     if (buttonEl) {
         var buttonChosen = parseInt(buttonEl.getAttribute("selectedIndex"));
         var answerChoice = questions[currentQuestionIndex].answer;
+        // if right increment score 
         if (buttonChosen === answerChoice) {
             feedbackEl.textContent = "CORRECT!";
             score += 5;
-        }
-        else if (buttonChosen != answerChoice) {
+            // if wrong subtract time
+        } else if (buttonChosen != answerChoice) {
             feedbackEl.textContent = "WRONG!";
             timer -= 10;
+            // check if time has expired ( 0 or negative), endquiz if true otherwise display decremented time and continu
             if (timer <= 0) {
                 roundOver();
             }
             countDownEl.textContent = timer;
         }
-        feedbackEl.removeAttribute("class", "hidden");
-        feedbackEl.setAttribute("class", "feedback")
-        setTimeout(feedBackTimeout, 500);
+        // display feedback message for 0.5 seconds unless timer has reached 0 and quiz is over
+        if (timer > 0) {
+            feedbackEl.removeAttribute("class", "hidden");
+            feedbackEl.setAttribute("class", "feedback")
+            setTimeout(feedBackTimeout, 500);
+        }
     }
+}
+var feedbackEl = document.getElementById("question-feedback");
+
+function feedBackTimeout() {
+    feedbackEl.setAttribute("class", "hidden");
     getNextQuestion();
 }
+// check timer again before incrementing questions array index
 function getNextQuestion() {
     if (timer <= 0) {
         roundOver();
@@ -114,21 +128,25 @@ function getNextQuestion() {
     } else {
         ++currentQuestionIndex;
     }
+    // if index indicates no more questions quiz over, otherwise clear current question and build next question
     if (currentQuestionIndex >= questions.length) {
         roundOver();
-    }
-    else {
+    } else {
         clearAnswers();
         buildQuiz();
     }
 }
+// if quiz round over set timer to 0, display text round over message 
 function roundOver() {
     timer = 0;
     countDownEl.textContent = "Round Over!";
+    // clear starting timer, last question displayed, prepare to end quiz
     clearInterval(countDownTimer);
     clearAnswers();
     endQuiz();
 }
+// clear answer buttons by looping through choices, removing answer button at first index
+// so as array shrinks, we are not trying to access a non existent index
 function clearAnswers() {
     var count = quizAnswersEl.childElementCount;
     for (var i = 0; i < count; i++) {
@@ -137,15 +155,20 @@ function clearAnswers() {
 }
 var quizEndEl = document.getElementById("quiz-end");
 var submitButton = document.getElementById("submit-button");
+// hide question screen, unhide recording score screen and display final score
 function endQuiz() {
     quizQuestionEl.classList.add("hidden");
     quizEndEl.classList.remove("hidden");
     var finalScoreEl = document.getElementById("final-score");
     finalScoreEl.textContent = score;
+    // after user inputs initials and clicks submit button event to save score triggered
     submitButton.addEventListener("click", getInitials);
 }
+// user initials input is validated, if  this is first time quiz is played, an array is created to hold score data
+// initials and score are saved to local strorage if user current score is higher than last recorded high score
 const scoreName = "endscore";
 var initialsEl = document.getElementById("initials");
+
 function getInitials() {
     if (!initialsEl || initialsEl.value === "") {
         alert("You must enter your initials");
@@ -160,12 +183,17 @@ function getInitials() {
             };
             if (!lastHighScoreArray) lastHighScoreArray = [];
             lastHighScoreArray.push(scoreData);
-            lastHighScoreArray.sort(function (a, b) { return -(a.newScore - b.newScore) });
+            lastHighScoreArray.sort(function (a, b) {
+                return -(a.newScore - b.newScore)
+            });
             localStorage.setItem(scoreName, JSON.stringify(lastHighScoreArray));
         }
-    } showResults();
+    }
+    showResults();
 }
+// initials screen is hidden and results from local storage are displayed, 
 var highResultEl = document.getElementById("show-result");
+
 function showResults() {
     quizEndEl.classList.add("hidden");
     highResultEl.classList.remove("hidden");
@@ -176,11 +204,13 @@ function showResults() {
         showHighResultEl.value = "1. " + lastHighScoreArray[0].name + ":" + lastHighScoreArray[0].newScore;
     }
 };
+// user now has choice to clear all scores in storage
 function clearLocalStorage() {
     document.querySelector("#show-high-result").value = "";
     document.querySelector("#view-high-score").textContent = 0;
     localStorage.clear(lastHighScoreArray);
 }
+// and/or start quiz over, score and question index are reset
 function startGameOver() {
     highResultEl.classList.add("hidden");
     startPageEl.classList.remove("hidden")
@@ -188,6 +218,7 @@ function startGameOver() {
     currentQuestionIndex = 0;
     score = 0;
 }
+// event handlers for start, go back(start game over) and clear all scores from storage
 var startBtn = document.querySelector("#start-button");
 var goBackBtn = document.querySelector("#go-back");
 var clearResultBtn = document.querySelector("#clear-result");
