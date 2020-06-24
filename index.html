@@ -10,10 +10,12 @@
 </head>
 
 <body>
+    <!-- display privious high score and timer-->
     <section class="scores timers">
         <h1>View high score: <span id="view-high-score">0</span></h1>
         <h1>Timer: <span id="timer">0</span></h1>
     </section>
+    <!-- set up start page with button to start quiz-->
     <section class="start-page" id="start-page">
         <div class="header">
             <h2>Coding Quiz Challenge</h2>
@@ -28,11 +30,13 @@
             <p>Record your high score at the end of the quiz</p>
         </div>
     </section>
+            <!-- container for quiz questions-->
     <div id="quiz-content" class="quiz-content">
         <h2 id="quiz-question" class="quiz-question"></h2>
         <ul id="quiz-answers" class="quiz-answers"></ul>
         <div id="question-feedback" class="feedback hidden"></div>
     </div>
+    <!-- container for recording high score screen-->
     <section id="quiz-end" class="quiz-end hidden">
         <h2>All done!</h2>
         <p>Your final score is <span id="final-score"></span> </p>
@@ -42,6 +46,8 @@
             <button type="submit" id="submit-button">Submit</button>
         </div>
     </section>
+    <!-- container for displaying saved high score and clearing saved scores -->
+    <!-- and restarting game--> -->
     <section id="show-result" class="high-result hidden">
         <h2>High scores</h2>
         <input type="text" id="show-high-result" name="show-high-result">

@@ -48,7 +48,7 @@ var countDownTimer;
 function countDown() {
     var viewHighScoreEl = document.querySelector("#view-high-score");
     viewHighScoreEl.textContent = retreiveHighScore();
-    timer = questions.length * 5;
+    timer = questions.length * 15;
     countDownTimer = setInterval(function () {
         countDownEl.textContent = timer;
         timer--;
@@ -178,6 +178,7 @@ function showResults() {
 };
 function clearLocalStorage() {
     document.querySelector("#show-high-result").value = "";
+    document.querySelector("#view-high-score").textContent = 0;
     localStorage.clear(lastHighScoreArray);
 }
 function startGameOver() {

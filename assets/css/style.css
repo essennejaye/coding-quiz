@@ -1,26 +1,113 @@
-.scores, .timers {
+/* displaying timer and previous high score */
+
+.scores,
+.timers {
   display: flex;
   justify-content: space-between;
   font-size: 13px;
   margin: 0 5px;
   padding: 0 5px;
 }
+
 .scores h1 {
   font-weight: 100;
 }
+
+/* start page */
+
 .header {
   text-align: center;
 }
+
+.header h3 {
+  font-size: 32px;
+}
+
+.container {
+  text-align: center;
+}
+
+.start {
+  visibility: visible;
+}
+
+.instructions {
+  text-align: center;
+  font-size: 22px;
+}
+
+/* questions and answers */
+
+.quiz-content {
+  justify-content: center;
+  margin: 75px;
+  text-align: center;
+}
+
+.quiz-question {
+  font-size: 38px;
+  width: 50%;
+  margin: auto;
+}
+
+.quiz-answers {
+  width: 50%;
+  margin: auto;
+}
+
+.list-choice {
+  list-style: none;
+}
+
+/* feedback message */
+
+.feedback {
+  font-size: 28px;
+  font-style: italic;
+  color: red;
+  border-bottom: solid 2px red;
+  width: 50%;
+  margin: auto;
+}
+
+/* end of quiz record score */
+
+.quiz-end p {
+  display: block;
+  text-align: center;
+  font-size: 34px;
+}
+
+.initial-input {
+  font-size: 28px;
+  text-align: center;
+}
+
+.quiz-end button {
+  display: block;
+  margin: 15px auto;
+  padding: 10px 40px;
+}
+
+/* display high score */
+
+.high-result {
+  text-align: center;
+}
+
+/* style used by multiple classes */
+
+.hidden {
+  display: none;
+}
+
+/* global styles */
+
 h2 {
   font-size: 44px;
   text-align: center;
 }
-.header h3 {
-  font-size: 32px;
-}
-.container {
-  text-align: center;
-}
+
 button {
   padding: 10px;
   margin: 24px;
@@ -30,55 +117,13 @@ button {
   color: white;
   border-radius: 10px;
 }
-.button-choice:hover {
-  background-color:  white;
-  color:#247BA0;
+
+button:hover {
+  background-color: white;
+  color: #247BA0;
 }
-.hidden {
-  display: none;
-}
-.start {
-  visibility: visible;
-}
-.instructions {
-  text-align: center;
-  font-size: 22px;
-}
-.quiz-content {
-  justify-content: center;
-  margin: 75px;
-  text-align: center;
-}
-.quiz-question {
-  font-size: 38px;
-  width: 50%;
-  margin: auto;
-}
-.quiz-answers {
-  width: 50%;
-  margin: auto;
-}
-.list-choice {
-  list-style: none;
-}
-.feedback {
-  font-size: 28px;
-  font-style: italic;
-  color: red;
-  border-bottom: solid 2px red;
-  width: 50%;
-  margin: auto;
-}
-.quiz-end p {
-  display: block;
-  text-align: center;
-  font-size: 34px;
-}
-.initial-input {
-  font-size: 28px;
-  text-align: center;
-}
-input[type="text" i] {
+
+input[type="text"i] {
   padding: 10px 25px;
   margin: 12px 10px;
   background-color: #247BA0;
@@ -87,12 +132,3 @@ input[type="text" i] {
   font-size: 20px;
   width: 10%;
 }
-.quiz-end button {
-  display: block;
-  margin: 15px auto;
-  padding: 10px 40px;
-}
-.high-result {
-  text-align: center;
-}
-
